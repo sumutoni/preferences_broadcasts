@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:get/get.dart';
 
 ThemeData light = ThemeData(
   scaffoldBackgroundColor: Colors.white,
-  appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+  appBarTheme: const AppBarTheme(backgroundColor: Colors.white, titleTextStyle: TextStyle(color:Color.fromARGB(193, 13, 14, 92))),
   iconTheme: const IconThemeData(color: Color.fromARGB(193, 13, 14, 92)),
   textTheme: const TextTheme(
     bodyText1: TextStyle(color: Color.fromARGB(248, 78, 45, 122)),
@@ -17,7 +17,7 @@ ThemeData light = ThemeData(
 );
 ThemeData dark = ThemeData(
   scaffoldBackgroundColor: const Color.fromARGB(248, 49, 42, 58),
-  appBarTheme: const AppBarTheme(backgroundColor: Color.fromARGB(248, 49, 42, 58)),
+  appBarTheme: const AppBarTheme(backgroundColor: Color.fromARGB(248, 49, 42, 58), titleTextStyle: TextStyle(color:Color.fromARGB(248, 78, 45, 122))),
   iconTheme: const IconThemeData(color: Color.fromARGB(193, 194, 194, 212), weight: 30.0),
   textTheme: const TextTheme(
     bodyText1: TextStyle(color: Color.fromARGB(248, 203, 194, 214)),
@@ -27,40 +27,36 @@ ThemeData dark = ThemeData(
 
   ),
   drawerTheme: const DrawerThemeData(backgroundColor: Color.fromARGB(248, 49, 42, 58),),
+  listTileTheme: const ListTileThemeData(iconColor: Color.fromARGB(248, 203, 194, 214), textColor: Color.fromARGB(248, 203, 194, 214))
    
 );
 
-class ThemeNotifier extends ChangeNotifier{
-  String key = "theme";
-  late SharedPreferences prefs;
-  bool _darkTheme = false;
+class ThemeController extends GetxController {
+  late SharedPreferences _prefs;
 
- ThemeNotifier() {
-    _initPrefs().then((_) {
-      _loadPrefs();
-    });
+  final RxBool isDarkMode = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loadThemeFromPrefs();
   }
-  
-  bool get darkTheme => _darkTheme;
 
-  toggleTheme(){
-    _darkTheme = !_darkTheme;
-    _savePrefs();
-    notifyListeners();
+  void toggleTheme(bool isDark) {
+    isDarkMode.value = isDark;
+    _saveThemeToPrefs(isDark);
   }
 
   Future<void> _initPrefs() async {
-    prefs = await SharedPreferences.getInstance();
+    _prefs = await SharedPreferences.getInstance();
   }
 
-  _loadPrefs() async{
-   await _initPrefs();
-   _darkTheme = prefs.getBool(key) ?? false;
-   notifyListeners();
-  }
-
-  _savePrefs() async{
+  Future<void> _loadThemeFromPrefs() async {
     await _initPrefs();
-    prefs.setBool(key, _darkTheme);
+    isDarkMode.value = _prefs.getBool('isDarkMode') ?? false;
+  }
+
+  void _saveThemeToPrefs(bool isDark) {
+    _prefs.setBool('isDarkMode', isDark);
   }
 }

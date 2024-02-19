@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:preferences_broadcasts/Themes/theme.dart';
 import 'package:provider/provider.dart';
-
+import 'package:get/get.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -11,6 +11,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  final ThemeController themeController = Get.find();
 
   Widget settingsItem(String text, String subtitle){
     return Material(
@@ -18,17 +19,15 @@ class _SettingsState extends State<Settings> {
       child: ListTile(
         contentPadding: const EdgeInsets.only(top:50.0, left: 30.0),
         selectedTileColor: const Color.fromARGB(146, 27, 11, 85),
-        trailing: Consumer<ThemeNotifier>(
-          builder: (context, notifier, child) => Switch(
-            value: notifier.darkTheme, 
+        trailing:  Switch(
+            value: themeController.isDarkMode.value,
             activeColor: const Color.fromARGB(193, 13, 14, 92),
             onChanged: (value){
               setState(() {
-                notifier.toggleTheme();
+                themeController.toggleTheme(value);
               });
             }
           ),
-        ),
         title: Text(text, style:  const TextStyle(color: Color.fromARGB(193, 13, 14, 92), fontSize: 25.0, fontWeight: FontWeight.bold)),
         subtitle: Text(subtitle, style:  const TextStyle(color: Color.fromARGB(193, 13, 14, 92), fontSize: 15.0,)),
       ),
