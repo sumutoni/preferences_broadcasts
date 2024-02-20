@@ -32,7 +32,7 @@ class NetworkController extends GetxController{
           Get.rawSnackbar(
             messageText: const Center(child: Text('Back online', style: TextStyle(color: Colors.white, fontSize: 14.0),)),
             isDismissible: false,
-            duration: const Duration(milliseconds: 1000),
+            duration: const Duration(seconds: 25),
             backgroundColor: const Color.fromARGB(255, 66, 21, 117),
             icon: const Center(child: Icon(Icons.wifi, color: Colors.white, size: 20,)),
             margin: const EdgeInsets.symmetric(vertical: 0),

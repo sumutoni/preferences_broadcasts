@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         title: const Text(
           'H O M I E O',
-          style: TextStyle(color: Color.fromARGB(193, 13, 14, 92), fontSize: 30.0, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(onPressed: (){

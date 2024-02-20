@@ -20,7 +20,7 @@ class HomeTab extends StatelessWidget {
               margin: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),),
               padding: const EdgeInsets.all(15.0),
-              child: const Text('Welcome  to  Homieo',style: TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold, color: Color.fromARGB(223, 65, 37, 109),fontFamily:'Comfortaa')))
+              child: const Text('Welcome  to  Homieo',style: TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold,fontFamily:'Comfortaa')))
           ],
         )
         )
